@@ -51,12 +51,13 @@
 
     // Main function to call the confirmEmail API
     async function confirmEmail() {
-      const params = getQueryParams();
-      const userId = params.userId;
-      const code = params.code;
-      const changedEmail = params.changedEmail || null;
+//       const params = getQueryParams();
+      const params = new URLSearchParams(window.location.search)
+      const userId = params.get('userId');
+      const code = params.get('code');
+      const changedEmail = params.get('changedEmail') || null;
       // Get the API base URL if provided, remove trailing slash if exists
-      const apiUrlParam = params.apiUrl?.replace(/\/$/, '');
+      var apiUrlParam = params.get('apiUrlParam');
 
       // Check for required parameters
       if (!userId || !code || !apiUrlParam) {
