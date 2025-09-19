@@ -1,1 +1,474 @@
-"Hello World"
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recipeez — Cook smarter, not longer</title>
+  <meta name="description" content="Recipeez: create, share, and discover recipes tailored to your tastes. Powerful filters, nutrition tracking, and a smooth mobile experience." />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Recipeez — Cook smarter, not longer" />
+  <meta property="og:description" content="Create, share, and discover recipes tailored to your tastes." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#d34f00" />
+  <style>
+    :root {
+      --rx-primary: #d34f00; /* 0xFFd34f00 */
+      --rx-primary-600: #b74300;
+      --rx-primary-100: #ffe6d5;
+      --rx-ink-900: #0e1525;
+      --rx-ink-700: #34445d;
+      --rx-ink-600: #51617a;
+      --rx-ink-500: #6c7b92;
+      --rx-ink-300: #c9d1e0;
+      --rx-ink-200: #e7ebf3;
+      --rx-ink-100: #f6f8fc;
+      --rx-card: #ffffff;
+      --rx-border: #e6eaf2;
+      --rx-hero: radial-gradient(90% 120% at 80% 0%, rgba(211,79,0,0.08), transparent 60%),
+                 radial-gradient(70% 80% at 20% 20%, rgba(255,229,210,0.55), transparent 60%),
+                 #ffffff;
+    }
+
+    html, body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial; color: var(--rx-ink-900); }
+    .py-6 { padding-top: 4rem; padding-bottom: 4rem; }
+
+    /* Navbar */
+    .navbar.rx-navbar { transition: background-color .3s ease, box-shadow .3s ease, color .2s ease; }
+    .navbar.rx-navbar .navbar-brand { font-weight: 800; letter-spacing: .2px; }
+    .navbar.rx-navbar .nav-link { transition: color .2s ease; }
+
+    .navbar.rx-navbar.top { background-color: var(--rx-primary); }
+    .navbar.rx-navbar.top .navbar-brand, .navbar.rx-navbar.top .nav-link { color: #fff; }
+    .navbar.rx-navbar.top .nav-link:hover { color: #ffe6d5; }
+
+    .navbar.rx-navbar.scrolled { background-color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.06); }
+    .navbar.rx-navbar.scrolled .navbar-brand { color: var(--rx-ink-900); }
+    .navbar.rx-navbar.scrolled .nav-link { color: var(--rx-ink-600); }
+    .navbar.rx-navbar.scrolled .nav-link:hover { color: var(--rx-primary); }
+
+    /* Buttons */
+    .btn-primary { --bs-btn-bg: var(--rx-primary); --bs-btn-border-color: var(--rx-primary); --bs-btn-hover-bg: var(--rx-primary-600); --bs-btn-hover-border-color: var(--rx-primary-600); --bs-btn-focus-shadow-rgb: 211,79,0; }
+    .btn-outline-primary { --bs-btn-color: var(--rx-primary); --bs-btn-border-color: var(--rx-primary); --bs-btn-hover-bg: var(--rx-primary); --bs-btn-hover-border-color: var(--rx-primary); --bs-btn-hover-color: #fff; }
+
+    /* Hero */
+    .hero { background: var(--rx-hero); color: var(--rx-ink-900); position: relative; overflow: clip; }
+    .hero h1 { font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.05; font-weight: 800; }
+    .hero p.lead { color: var(--rx-ink-600); }
+    .badge-soft { background: var(--rx-primary-100); color: var(--rx-primary); border: 1px solid rgba(211,79,0,.25); }
+
+    /* Device mock */
+    .device { position: relative; border-radius: 28px; background: var(--rx-card); padding: 12px; width: 320px; box-shadow: 0 20px 60px rgba(14,21,37,0.12), 0 0 0 1px rgba(14,21,37,0.06) inset; }
+    .device .screen { border-radius: 22px; overflow: hidden; aspect-ratio: 9/19.5; background: var(--rx-ink-100); border: 1px solid var(--rx-border); position: relative; }
+    .device .status-notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 120px; height: 18px; background: #fff; border-radius: 20px; border:1px solid var(--rx-border); }
+    .screen .tile { background: #fff; border: 1px solid var(--rx-border); border-radius: 14px; padding: 12px; color: var(--rx-ink-900); }
+    .screen .chip { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--rx-border); background: var(--rx-ink-100); color: var(--rx-ink-700); border-radius: 999px; padding: .25rem .6rem; font-size: .75rem; }
+
+    /* Cards & sections */
+    .feature-card { background: var(--rx-card); border: 1px solid var(--rx-border); border-radius: 16px; color: var(--rx-ink-900); }
+    .feature-card p { color: var(--rx-ink-600); }
+    .icon-badge { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: var(--rx-primary-100); border: 1px solid rgba(211,79,0,.25); color: var(--rx-primary); }
+
+    .section-title { font-weight: 800; letter-spacing: 0.2px; }
+    .section-subtitle { color: var(--rx-ink-600); }
+    .section-muted { background: var(--rx-ink-100); }
+
+    /* Steps */
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-index { flex: 0 0 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--rx-primary-100); color: var(--rx-primary); border: 1px solid rgba(211,79,0,.25); font-weight: 700; }
+
+    /* Footer */
+    .footer { background: #ffffff; color: var(--rx-ink-600); border-top: 1px solid var(--rx-border); }
+
+    /* Animations */
+    [data-animate="fade-up"] { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    [data-animate="fade-up"].in { opacity: 1; transform: translateY(0); }
+
+    /* Store badges */
+    .store-badges img { height: 40px; }
+
+    /* Screens carousel (vertical app shots) */
+    .phone-frame { width: 100%; aspect-ratio: 9/19.5; background: #fff; border: 1px solid var(--rx-border); border-radius: 18px; box-shadow: 0 10px 30px rgba(14,21,37,0.08); object-fit: cover; display: block; }
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#rxNav" data-bs-offset="100" tabindex="0">
+
+  <!-- Navbar -->
+  <nav id="rxNav" class="navbar navbar-expand-lg fixed-top rx-navbar top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <!-- <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2l2.39 4.84L20 8l-4 3.9L17 18l-5-2.6L7 18l1-6.1L4 8l5.61-1.16L12 2z" fill="url(#g)"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#fff"/><stop offset="1" stop-color="#ffe6d5"/></linearGradient></defs>
+        </svg> -->
+        <img src="./images/white_logo.png" height="40" />
+        Recipeez
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
+          <li class="nav-item"><a class="nav-link" href="#screens">Screens</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+        </ul>
+        <div class="ms-lg-3 d-flex align-items-center store-badges">
+          <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" class="d-inline-block" aria-label="Get it on Google Play">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="40" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container" style="padding-top: 7rem; padding-bottom: 4rem;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6" data-animate="fade-up">
+          <span class="badge badge-soft mb-3">Now available</span>
+          <h1 class="mb-3">Create, share & discover recipes <span style="background: linear-gradient(90deg,#d34f00,#ff9150); -webkit-background-clip: text; background-clip: text; color: transparent;">that fit your life</span>.</h1>
+          <p class="lead mb-4">Recipeez helps you cook without friction: personal recommendations, powerful filters, calories & macros, and a clean mobile experience.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" class="d-inline-block" aria-label="Get it on Google Play">
+                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="100" />
+            </a>
+        </div>
+        <div class="col-lg-6 justify-content-lg-end justify-content-center" data-animate="fade-up">
+            <img src="./images/app_screenshots.png" alt="App screenshots" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:18px;" />
+        </div>
+      </div>
+
+      <div class="row text-muted mt-5 gy-3" aria-hidden="true">
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-people text-primary"></i><small>Global community</small></div>
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-funnel text-primary"></i><small>Advanced filters</small></div>
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-graph-up text-primary"></i><small>Nutrition tracking</small></div>
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-lock text-primary"></i><small>Private recipes</small></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features" class="py-6 section-muted">
+    <div class="container">
+      <div class="text-center mb-5" data-animate="fade-up">
+        <h2 class="section-title mb-2">Everything you need to cook better</h2>
+        <p class="section-subtitle">Spend less time searching—and more time enjoying.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" data-animate="fade-up">
+          <div class="feature-card h-100 p-4">
+            <div class="icon-badge mb-3"><i class="bi bi-magic fs-5"></i></div>
+            <h5 class="mb-2">Smart suggestions</h5>
+            <p>Our engine proposes relevant ingredients & categories for your recipes.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-animate="fade-up">
+          <div class="feature-card h-100 p-4">
+            <div class="icon-badge mb-3"><i class="bi bi-heart-pulse fs-5"></i></div>
+            <h5 class="mb-2">Nutrition goals</h5>
+            <p>Calories & macros at a glance. Adapt to your needs and lifestyle.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-animate="fade-up">
+          <div class="feature-card h-100 p-4">
+            <div class="icon-badge mb-3"><i class="bi bi-hand-thumbs-up fs-5"></i></div>
+            <h5 class="mb-2">Community</h5>
+            <p>Share, comment, and save favorites. Get inspired every day.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-animate="fade-up">
+          <div class="feature-card h-100 p-4">
+            <div class="icon-badge mb-3"><i class="bi bi-shield-lock fs-5"></i></div>
+            <h5 class="mb-2">Privacy & control</h5>
+            <p>Keep recipes private, share with friends, or publish—your choice.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works + Value (replacing testimonials) -->
+  <section id="how" class="py-6">
+    <div class="container">
+      <div class="row align-items-start g-5">
+        <div class="col-lg-5" data-animate="fade-up">
+          <h2 class="section-title mb-3">How it works</h2>
+          <p class="section-subtitle">From idea to plate in three simple steps.</p>
+          <div class="d-flex flex-column gap-4 mt-4">
+            <div class="step">
+              <div class="step-index">1</div>
+              <div>
+                <h6 class="mb-1">Create or import a recipe</h6>
+                <p class="mb-0 section-subtitle">Add a title, ingredients, and steps—fast and frictionless.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-index">2</div>
+              <div>
+                <h6 class="mb-1">Filter & personalize</h6>
+                <p class="mb-0 section-subtitle">Diet, allergies, time, difficulty, calories—tune it to your needs.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-index">3</div>
+              <div>
+                <h6 class="mb-1">Share & keep improving</h6>
+                <p class="mb-0 section-subtitle">Publish, get feedback, save favorites, and track your goals.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7" data-animate="fade-up">
+          <div class="feature-card p-4 p-lg-5 h-100">
+            <div class="row g-4">
+              <div class="col-12">
+                <h5 class="mb-2">Why Recipeez</h5>
+                <p class="mb-0 section-subtitle">Real value beyond a recipe feed.</p>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-graph-up"></i></div>
+                  <div>
+                    <h6 class="mb-1">Meal planning ready</h6>
+                    <p class="mb-0 text-muted">Build weekly plans in minutes and keep grocery lists in sync.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-shield-check"></i></div>
+                  <div>
+                    <h6 class="mb-1">Your data, your rules</h6>
+                    <p class="mb-0 text-muted">Private by default. Share only what you want, with whom you want.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-cpu"></i></div>
+                  <div>
+                    <h6 class="mb-1">Fast & lightweight</h6>
+                    <p class="mb-0 text-muted">Optimized for speed and clarity on every device.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-box-arrow-in-down"></i></div>
+                  <div>
+                    <h6 class="mb-1">Easy import</h6>
+                    <p class="mb-0 text-muted">Bring your existing recipes and keep everything in one place.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12"><div class="w-100" style="height:1px;background:var(--rx-border);"></div></div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-emoji-smile"></i></div>
+                  <div>
+                    <h6 class="mb-1">Beginner‑friendly</h6>
+                    <p class="mb-0 text-muted">Clear steps, clean UI, and no fluff. Just cook.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-activity"></i></div>
+                  <div>
+                    <h6 class="mb-1">Progress tracking</h6>
+                    <p class="mb-0 text-muted">Track what you cook, what you loved, and what to try next.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screens / Carousel -->
+  <section id="screens" class="py-6 section-muted">
+    <div class="container">
+      <div class="text-center mb-4" data-animate="fade-up">
+        <h2 class="section-title mb-2">A quick look at the app</h2>
+        <p class="section-subtitle">Smooth, modern, and made for mobile first.</p>
+      </div>
+
+      <!-- Multi-item carousel: shows 3 vertical screens per slide -->
+      <div id="screensCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#screensCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#screensCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+
+        <div class="carousel-inner rounded-4 border" style="border-color: var(--rx-border);">
+          <!-- Slide 1: images 1-3 -->
+          <div class="carousel-item active" data-bs-interval="4500">
+            <div class="row g-3 screens-triplet p-3">
+              <div class="col-12 col-md-6 col-lg-4">
+                <img class="phone-frame" src="./images/app_pres_1.png" alt="Recipeez screen 1" loading="lazy" />
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <img class="phone-frame" src="./images/app_pres_2.png" alt="Recipeez screen 2" loading="lazy" />
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <img class="phone-frame" src="./images/app_pres_3.png" alt="Recipeez screen 3" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: images 4-6 -->
+          <div class="carousel-item" data-bs-interval="4500">
+            <div class="row g-3 screens-triplet p-3">
+              <div class="col-12 col-md-6 col-lg-4">
+                <img class="phone-frame" src="./images/app_pres_4.png" alt="Recipeez screen 4" loading="lazy" />
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <img class="phone-frame" src="./images/app_pres_5.png" alt="Recipeez screen 5" loading="lazy" />
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <img class="phone-frame" src="./images/app_pres_6.png" alt="Recipeez screen 6" loading="lazy" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#screensCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#screensCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ + Roadmap -->
+  <section id="faq" class="py-6">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6" data-animate="fade-up">
+          <div class="text-start mb-3">
+            <h2 class="section-title mb-2">Good to know</h2>
+            <p class="section-subtitle">Answers to common questions.</p>
+          </div>
+          <div class="accordion" id="faqAcc">
+            <div class="accordion-item border rounded-3 overflow-hidden" style="border-color: var(--rx-border)">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#f1">Is Recipeez free?</button>
+              </h2>
+              <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-muted">Recipeez is free to use with optional Pro features for power users.</div>
+              </div>
+            </div>
+            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#f2">Are my recipes private?</button>
+              </h2>
+              <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-muted">You control visibility. Keep recipes private, share with close ones, or make them public.</div>
+              </div>
+            </div>
+            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#f3">Which platforms are supported?</button>
+              </h2>
+              <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body text-muted">Android is available now. iOS and a read‑only web view are planned.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-animate="fade-up">
+          <div class="feature-card p-4 h-100">
+            <h5 class="mb-2">Roadmap highlights</h5>
+            <p class="section-subtitle mb-3">What we're actively working on next.</p>
+            <ul class="list-unstyled m-0 d-grid gap-3">
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>iOS release</strong> — native app with feature parity.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Advanced meal planner</strong> — drag‑and‑drop weekly schedules & shopping lists.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Recipe import</strong> — smarter parsing from popular sites.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Creator tools</strong> — analytics for views, saves, and feedback.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Download -->
+  <section id="download" class="py-6 section-muted">
+    <div class="container">
+      <div class="feature-card p-4 p-lg-5 text-center mx-auto" style="max-width: 980px;">
+        <div class="icon-badge mx-auto mb-3"><i class="bi bi-phone"></i></div>
+        <h2 class="section-title">Download Recipeez today</h2>
+        <p class="section-subtitle">Cook smarter with filters, nutrition tracking, and a clean mobile experience.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-2 mt-3 store-badges">
+          <a class="d-inline-block" href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" aria-label="Get it on Google Play">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" />
+          </a>
+          <!-- Add App Store badge when iOS launches. -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer py-5">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <strong>Recipeez</strong>
+          </div>
+          <small>© <span id="y"></span> Recipeez. All rights reserved.</small>
+        </div>
+        <div class="col-md-6 d-flex justify-content-md-end gap-3">
+          <a href="#" class="link-secondary link-underline-opacity-0">Privacy</a>
+          <a href="#" class="link-secondary link-underline-opacity-0">Terms</a>
+          <a href="#" class="link-secondary link-underline-opacity-0">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    // Navbar color swap on scroll
+    const nav = document.querySelector('.rx-navbar');
+    function handleNavScroll() {
+      if (window.scrollY > 10) {
+        nav.classList.remove('top');
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+        nav.classList.add('top');
+      }
+    }
+    document.addEventListener('scroll', handleNavScroll);
+    window.addEventListener('load', handleNavScroll);
+
+    // Entrance fades
+    const onScroll = () => {
+      const els = document.querySelectorAll('[data-animate]');
+      const y = window.scrollY + window.innerHeight * 0.9;
+      els.forEach(el => {
+        if (!el.classList.contains('in') && el.getBoundingClientRect().top + window.scrollY < y) {
+          el.classList.add('in');
+        }
+      });
+    };
+    document.addEventListener('scroll', onScroll);
+    window.addEventListener('load', onScroll);
+
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
