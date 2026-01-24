@@ -3,36 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recipeez — Cook smarter, not longer</title>
-  <meta name="description" content="Recipeez: create, share, and discover recipes tailored to your tastes. Powerful filters, nutrition tracking, and a smooth mobile experience." />
+  <title>Recipeez — Your recipes. Beautifully organized.</title>
+  <meta name="description" content="Recipeez: Save recipes from anywhere, organize your collection, and cook with confidence. Your personal recipe manager for Android." />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <meta property="og:title" content="Recipeez — Cook smarter, not longer" />
-  <meta property="og:description" content="Create, share, and discover recipes tailored to your tastes." />
+  <meta property="og:title" content="Recipeez — Your recipes. Beautifully organized." />
+  <meta property="og:description" content="Save recipes from anywhere, organize your collection, and cook with confidence." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#d34f00" />
   <style>
     :root {
-      --rx-primary: #d34f00; /* 0xFFd34f00 */
-      --rx-primary-600: #b74300;
-      --rx-primary-100: #ffe6d5;
-      --rx-ink-900: #0e1525;
-      --rx-ink-700: #34445d;
-      --rx-ink-600: #51617a;
-      --rx-ink-500: #6c7b92;
-      --rx-ink-300: #c9d1e0;
-      --rx-ink-200: #e7ebf3;
-      --rx-ink-100: #f6f8fc;
+      /* Warm Palette */
+      --rx-cream: #FFFCf9;
+      --rx-cream-warm: #FFF8F3;
+      --rx-linen: #F8F4F0;
+      --rx-taupe: #BCA79D;
+      --rx-taupe-light: rgba(188,167,157,0.3);
+      --rx-brown-warm: #55433B;
+      --rx-brown-medium: #7A6459;
+      --rx-brown-light: #9C8A82;
+      --rx-terracotta: #d34f00;
+      --rx-terracotta-soft: rgba(211,79,0,0.12);
+      --rx-terracotta-100: #ffe6d5;
+      --rx-terracotta-600: #b74300;
       --rx-card: #ffffff;
-      --rx-border: #e6eaf2;
-      --rx-hero: radial-gradient(90% 120% at 80% 0%, rgba(211,79,0,0.08), transparent 60%),
-                 radial-gradient(70% 80% at 20% 20%, rgba(255,229,210,0.55), transparent 60%),
-                 #ffffff;
+      --rx-border: #E8DDD6;
+      --rx-shadow: rgba(85,67,59,0.08);
+      --rx-shadow-lg: rgba(85,67,59,0.12);
+      --rx-hero: radial-gradient(90% 120% at 80% 0%, rgba(211,79,0,0.10), transparent 60%),
+                 radial-gradient(70% 80% at 20% 20%, rgba(255,229,210,0.65), transparent 60%),
+                 var(--rx-cream);
     }
 
-    html, body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial; color: var(--rx-ink-900); }
+    html, body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+      color: var(--rx-brown-warm);
+      background: var(--rx-cream);
+    }
     .py-6 { padding-top: 4rem; padding-bottom: 4rem; }
 
     /* Navbar */
@@ -40,57 +49,172 @@
     .navbar.rx-navbar .navbar-brand { font-weight: 800; letter-spacing: .2px; }
     .navbar.rx-navbar .nav-link { transition: color .2s ease; }
 
-    .navbar.rx-navbar.top { background-color: var(--rx-primary); }
+    .navbar.rx-navbar.top { background-color: var(--rx-terracotta); }
     .navbar.rx-navbar.top .navbar-brand, .navbar.rx-navbar.top .nav-link { color: #fff; }
-    .navbar.rx-navbar.top .nav-link:hover { color: #ffe6d5; }
+    .navbar.rx-navbar.top .nav-link:hover { color: var(--rx-terracotta-100); }
 
-    .navbar.rx-navbar.scrolled { background-color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.06); }
-    .navbar.rx-navbar.scrolled .navbar-brand { color: var(--rx-ink-900); }
-    .navbar.rx-navbar.scrolled .nav-link { color: var(--rx-ink-600); }
-    .navbar.rx-navbar.scrolled .nav-link:hover { color: var(--rx-primary); }
+    .navbar.rx-navbar.scrolled { background-color: var(--rx-cream); box-shadow: 0 2px 12px var(--rx-shadow); }
+    .navbar.rx-navbar.scrolled .navbar-brand { color: var(--rx-brown-warm); }
+    .navbar.rx-navbar.scrolled .nav-link { color: var(--rx-brown-medium); }
+    .navbar.rx-navbar.scrolled .nav-link:hover { color: var(--rx-terracotta); }
 
     /* Buttons */
-    .btn-primary { --bs-btn-bg: var(--rx-primary); --bs-btn-border-color: var(--rx-primary); --bs-btn-hover-bg: var(--rx-primary-600); --bs-btn-hover-border-color: var(--rx-primary-600); --bs-btn-focus-shadow-rgb: 211,79,0; }
-    .btn-outline-primary { --bs-btn-color: var(--rx-primary); --bs-btn-border-color: var(--rx-primary); --bs-btn-hover-bg: var(--rx-primary); --bs-btn-hover-border-color: var(--rx-primary); --bs-btn-hover-color: #fff; }
+    .btn-primary { --bs-btn-bg: var(--rx-terracotta); --bs-btn-border-color: var(--rx-terracotta); --bs-btn-hover-bg: var(--rx-terracotta-600); --bs-btn-hover-border-color: var(--rx-terracotta-600); --bs-btn-focus-shadow-rgb: 211,79,0; }
+    .btn-outline-primary { --bs-btn-color: var(--rx-terracotta); --bs-btn-border-color: var(--rx-terracotta); --bs-btn-hover-bg: var(--rx-terracotta); --bs-btn-hover-border-color: var(--rx-terracotta); --bs-btn-hover-color: #fff; }
 
     /* Hero */
-    .hero { background: var(--rx-hero); color: var(--rx-ink-900); position: relative; overflow: clip; }
-    .hero h1 { font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.05; font-weight: 800; }
-    .hero p.lead { color: var(--rx-ink-600); }
-    .badge-soft { background: var(--rx-primary-100); color: var(--rx-primary); border: 1px solid rgba(211,79,0,.25); }
+    .hero { background: var(--rx-hero); color: var(--rx-brown-warm); position: relative; overflow: clip; }
+    .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.08; font-weight: 800; }
+    .hero p.lead { color: var(--rx-brown-medium); font-size: 1.15rem; }
+    .badge-soft { background: var(--rx-terracotta-soft); color: var(--rx-terracotta); border: 1px solid rgba(211,79,0,.25); font-weight: 500; }
 
-    /* Device mock */
-    .device { position: relative; border-radius: 28px; background: var(--rx-card); padding: 12px; width: 320px; box-shadow: 0 20px 60px rgba(14,21,37,0.12), 0 0 0 1px rgba(14,21,37,0.06) inset; }
-    .device .screen { border-radius: 22px; overflow: hidden; aspect-ratio: 9/19.5; background: var(--rx-ink-100); border: 1px solid var(--rx-border); position: relative; }
-    .device .status-notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 120px; height: 18px; background: #fff; border-radius: 20px; border:1px solid var(--rx-border); }
-    .screen .tile { background: #fff; border: 1px solid var(--rx-border); border-radius: 14px; padding: 12px; color: var(--rx-ink-900); }
-    .screen .chip { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--rx-border); background: var(--rx-ink-100); color: var(--rx-ink-700); border-radius: 999px; padding: .25rem .6rem; font-size: .75rem; }
+    /* Feature strip */
+    .feature-strip { color: var(--rx-brown-light); }
+    .feature-strip .text-primary { color: var(--rx-terracotta) !important; }
+
+    /* Chef mascot */
+    .chef-mascot {
+      filter: drop-shadow(0 8px 24px var(--rx-shadow-lg));
+    }
 
     /* Cards & sections */
-    .feature-card { background: var(--rx-card); border: 1px solid var(--rx-border); border-radius: 16px; color: var(--rx-ink-900); }
-    .feature-card p { color: var(--rx-ink-600); }
-    .icon-badge { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: var(--rx-primary-100); border: 1px solid rgba(211,79,0,.25); color: var(--rx-primary); }
+    .feature-card {
+      background: var(--rx-card);
+      border: 1px solid var(--rx-border);
+      border-radius: 20px;
+      color: var(--rx-brown-warm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--rx-shadow-lg);
+    }
+    .feature-card p { color: var(--rx-brown-medium); }
+    .icon-badge {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--rx-terracotta-soft);
+      border: 1px solid rgba(211,79,0,.2);
+      color: var(--rx-terracotta);
+    }
 
-    .section-title { font-weight: 800; letter-spacing: 0.2px; }
-    .section-subtitle { color: var(--rx-ink-600); }
-    .section-muted { background: var(--rx-ink-100); }
+    .section-title { font-weight: 800; letter-spacing: 0.2px; color: var(--rx-brown-warm); }
+    .section-subtitle { color: var(--rx-brown-medium); }
+    .section-muted { background: var(--rx-linen); }
 
     /* Steps */
     .step { display: flex; gap: 14px; align-items: flex-start; }
-    .step-index { flex: 0 0 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--rx-primary-100); color: var(--rx-primary); border: 1px solid rgba(211,79,0,.25); font-weight: 700; }
+    .step-index {
+      flex: 0 0 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--rx-terracotta-soft);
+      color: var(--rx-terracotta);
+      border: 1px solid rgba(211,79,0,.2);
+      font-weight: 700;
+    }
+    .step h6 { color: var(--rx-brown-warm); }
+    .step p { color: var(--rx-brown-medium); }
 
     /* Footer */
-    .footer { background: #ffffff; color: var(--rx-ink-600); border-top: 1px solid var(--rx-border); }
+    .footer { background: var(--rx-cream-warm); color: var(--rx-brown-medium); border-top: 1px solid var(--rx-border); }
 
     /* Animations */
     [data-animate="fade-up"] { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
     [data-animate="fade-up"].in { opacity: 1; transform: translateY(0); }
 
+    /* Floating animation for hero elements */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+
     /* Store badges */
-    .store-badges img { height: 40px; }
+    .store-badges img { height: 48px; }
 
     /* Screens carousel (vertical app shots) */
-    .phone-frame { width: 100%; aspect-ratio: 9/19.5; background: #fff; border: 1px solid var(--rx-border); border-radius: 18px; box-shadow: 0 10px 30px rgba(14,21,37,0.08); object-fit: cover; display: block; }
+    .phone-frame {
+      width: 100%;
+      aspect-ratio: 9/19.5;
+      background: #fff;
+      border: 1px solid var(--rx-border);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px var(--rx-shadow);
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Accordion styling */
+    .accordion-button {
+      background: var(--rx-card);
+      color: var(--rx-brown-warm);
+      font-weight: 500;
+    }
+    .accordion-button:not(.collapsed) {
+      background: var(--rx-cream-warm);
+      color: var(--rx-terracotta);
+      box-shadow: none;
+    }
+    .accordion-button:focus { box-shadow: 0 0 0 0.25rem rgba(211,79,0,0.15); }
+    .accordion-body { color: var(--rx-brown-medium); background: var(--rx-cream); }
+
+    /* CTA section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--rx-cream-warm) 0%, var(--rx-linen) 50%, rgba(211,79,0,0.08) 100%);
+    }
+    .cta-card {
+      background: var(--rx-card);
+      border: 1px solid var(--rx-border);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px var(--rx-shadow-lg);
+    }
+
+    /* Text colors */
+    .text-muted { color: var(--rx-brown-light) !important; }
+    .text-primary { color: var(--rx-terracotta) !important; }
+
+    /* Carousel controls */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: var(--rx-brown-warm);
+      border-radius: 50%;
+      padding: 20px;
+    }
+    .carousel-indicators button {
+      background-color: var(--rx-brown-light);
+    }
+    .carousel-indicators button.active {
+      background-color: var(--rx-terracotta);
+    }
+
+    /* Hero image styling */
+    .hero-image-container {
+      position: relative;
+    }
+    .hero-image {
+      border-radius: 20px;
+      box-shadow: 0 20px 60px var(--rx-shadow-lg);
+    }
+
+    /* Why Recipeez card */
+    .why-card {
+      background: var(--rx-card);
+      border: 1px solid var(--rx-border);
+      border-radius: 20px;
+    }
+    .why-card .icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#rxNav" data-bs-offset="100" tabindex="0">
@@ -99,11 +223,7 @@
   <nav id="rxNav" class="navbar navbar-expand-lg fixed-top rx-navbar top">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-        <!-- <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2l2.39 4.84L20 8l-4 3.9L17 18l-5-2.6L7 18l1-6.1L4 8l5.61-1.16L12 2z" fill="url(#g)"/>
-          <defs><linearGradient id="g" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#fff"/><stop offset="1" stop-color="#ffe6d5"/></linearGradient></defs>
-        </svg> -->
-        <img src="./images/white_logo.png" height="40" />
+        <img src="./images/white_logo.png" height="40" alt="Recipeez logo" />
         Recipeez
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Toggle navigation">
@@ -130,23 +250,26 @@
     <div class="container" style="padding-top: 7rem; padding-bottom: 4rem;">
       <div class="row align-items-center g-5">
         <div class="col-lg-6" data-animate="fade-up">
-          <span class="badge badge-soft mb-3">Now available</span>
-          <h1 class="mb-3">Create, share & discover recipes <span style="background: linear-gradient(90deg,#d34f00,#ff9150); -webkit-background-clip: text; background-clip: text; color: transparent;">that fit your life</span>.</h1>
-          <p class="lead mb-4">Recipeez helps you cook without friction: personal recommendations, powerful filters, calories & macros, and a clean mobile experience.</p>
-            <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" class="d-inline-block" aria-label="Get it on Google Play">
-                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="100" />
-            </a>
+          <span class="badge badge-soft mb-3">Free on Android</span>
+          <h1 class="mb-3">Your recipes. <span style="background: linear-gradient(90deg,#d34f00,#ff9150); -webkit-background-clip: text; background-clip: text; color: transparent;">Beautifully organized.</span></h1>
+          <p class="lead mb-4">Save recipes from anywhere, organize your collection, and cook with confidence. Recipeez is your personal recipe manager.</p>
+          <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" class="d-inline-block" aria-label="Get it on Google Play">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="64" />
+          </a>
         </div>
-        <div class="col-lg-6 justify-content-lg-end justify-content-center" data-animate="fade-up">
-            <img src="./images/app_screenshots.png" alt="App screenshots" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:18px;" />
+        <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center" data-animate="fade-up">
+          <div class="hero-image-container">
+            <img src="./images/app_screenshots.png" alt="Recipeez app screenshots" loading="lazy" class="hero-image" style="width:100%; max-width:500px; height:auto; display:block;" />
+            <img src="./images/chef_mascot.png" alt="Chef mascot" class="chef-mascot float-animation d-none d-lg-block" style="position:absolute; bottom:-20px; left:-60px; width:120px; height:auto;" />
+          </div>
         </div>
       </div>
 
-      <div class="row text-muted mt-5 gy-3" aria-hidden="true">
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-people text-primary"></i><small>Global community</small></div>
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-funnel text-primary"></i><small>Advanced filters</small></div>
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-graph-up text-primary"></i><small>Nutrition tracking</small></div>
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-lock text-primary"></i><small>Private recipes</small></div>
+      <div class="row feature-strip mt-5 gy-3" aria-hidden="true">
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-cloud-download text-primary"></i><small>Import from anywhere</small></div>
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-collection text-primary"></i><small>Smart organization</small></div>
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-heart-pulse text-primary"></i><small>Nutrition tracking</small></div>
+        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-shield-lock text-primary"></i><small>100% private</small></div>
       </div>
     </div>
   </header>
@@ -155,104 +278,86 @@
   <section id="features" class="py-6 section-muted">
     <div class="container">
       <div class="text-center mb-5" data-animate="fade-up">
-        <h2 class="section-title mb-2">Everything you need to cook better</h2>
-        <p class="section-subtitle">Spend less time searching—and more time enjoying.</p>
+        <h2 class="section-title mb-2">Everything you need to manage your recipes</h2>
+        <p class="section-subtitle">Save, organize, and cook with ease.</p>
       </div>
       <div class="row g-4">
         <div class="col-md-6 col-lg-3" data-animate="fade-up">
           <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-magic fs-5"></i></div>
-            <h5 class="mb-2">Smart suggestions</h5>
-            <p>Our engine proposes relevant ingredients & categories for your recipes.</p>
+            <div class="icon-badge mb-3"><i class="bi bi-cloud-arrow-down fs-5"></i></div>
+            <h5 class="mb-2">Smart Import</h5>
+            <p class="mb-0">Import recipes from any website, YouTube video, or just paste text. We'll organize it for you.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-animate="fade-up">
           <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-heart-pulse fs-5"></i></div>
-            <h5 class="mb-2">Nutrition goals</h5>
-            <p>Calories & macros at a glance. Adapt to your needs and lifestyle.</p>
+            <div class="icon-badge mb-3"><i class="bi bi-collection fs-5"></i></div>
+            <h5 class="mb-2">Your Collection</h5>
+            <p class="mb-0">Build your personal cookbook. Search, filter, and find any recipe in seconds.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-animate="fade-up">
           <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-hand-thumbs-up fs-5"></i></div>
-            <h5 class="mb-2">Community</h5>
-            <p>Share, comment, and save favorites. Get inspired every day.</p>
+            <div class="icon-badge mb-3"><i class="bi bi-bar-chart fs-5"></i></div>
+            <h5 class="mb-2">Nutrition at a Glance</h5>
+            <p class="mb-0">Calories & macros calculated automatically. Eat smarter without the effort.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-animate="fade-up">
           <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-shield-lock fs-5"></i></div>
-            <h5 class="mb-2">Privacy & control</h5>
-            <p>Keep recipes private, share with friends, or publish—your choice.</p>
+            <div class="icon-badge mb-3"><i class="bi bi-journal-check fs-5"></i></div>
+            <h5 class="mb-2">Cook Mode</h5>
+            <p class="mb-0">Step-by-step instructions, timers, and a clean interface designed for the kitchen.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How it works + Value (replacing testimonials) -->
+  <!-- How it works + Why Recipeez -->
   <section id="how" class="py-6">
     <div class="container">
       <div class="row align-items-start g-5">
         <div class="col-lg-5" data-animate="fade-up">
           <h2 class="section-title mb-3">How it works</h2>
-          <p class="section-subtitle">From idea to plate in three simple steps.</p>
+          <p class="section-subtitle">From saved recipe to finished dish in three simple steps.</p>
           <div class="d-flex flex-column gap-4 mt-4">
             <div class="step">
               <div class="step-index">1</div>
               <div>
-                <h6 class="mb-1">Create or import a recipe</h6>
-                <p class="mb-0 section-subtitle">Add a title, ingredients, and steps—fast and frictionless.</p>
+                <h6 class="mb-1">Save a recipe</h6>
+                <p class="mb-0">Import from a link, snap a photo, or type it manually.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-index">2</div>
               <div>
-                <h6 class="mb-1">Filter & personalize</h6>
-                <p class="mb-0 section-subtitle">Diet, allergies, time, difficulty, calories—tune it to your needs.</p>
+                <h6 class="mb-1">Organize your way</h6>
+                <p class="mb-0">Add tags, categories, and notes. Your system, your rules.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-index">3</div>
               <div>
-                <h6 class="mb-1">Share & keep improving</h6>
-                <p class="mb-0 section-subtitle">Publish, get feedback, save favorites, and track your goals.</p>
+                <h6 class="mb-1">Cook with ease</h6>
+                <p class="mb-0">Follow clear steps, track nutrition, and mark favorites.</p>
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-7" data-animate="fade-up">
-          <div class="feature-card p-4 p-lg-5 h-100">
+          <div class="why-card p-4 p-lg-5 h-100">
             <div class="row g-4">
               <div class="col-12">
                 <h5 class="mb-2">Why Recipeez</h5>
-                <p class="mb-0 section-subtitle">Real value beyond a recipe feed.</p>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-graph-up"></i></div>
-                  <div>
-                    <h6 class="mb-1">Meal planning ready</h6>
-                    <p class="mb-0 text-muted">Build weekly plans in minutes and keep grocery lists in sync.</p>
-                  </div>
-                </div>
+                <p class="mb-0 section-subtitle">Built for people who love to cook.</p>
               </div>
               <div class="col-md-6">
                 <div class="d-flex align-items-start gap-3">
                   <div class="icon-badge"><i class="bi bi-shield-check"></i></div>
                   <div>
                     <h6 class="mb-1">Your data, your rules</h6>
-                    <p class="mb-0 text-muted">Private by default. Share only what you want, with whom you want.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-cpu"></i></div>
-                  <div>
-                    <h6 class="mb-1">Fast & lightweight</h6>
-                    <p class="mb-0 text-muted">Optimized for speed and clarity on every device.</p>
+                    <p class="mb-0 text-muted">Private by default. Your recipes stay yours.</p>
                   </div>
                 </div>
               </div>
@@ -261,26 +366,44 @@
                   <div class="icon-badge"><i class="bi bi-box-arrow-in-down"></i></div>
                   <div>
                     <h6 class="mb-1">Easy import</h6>
-                    <p class="mb-0 text-muted">Bring your existing recipes and keep everything in one place.</p>
+                    <p class="mb-0 text-muted">Bring recipes from any website or app in seconds.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-lightning-charge"></i></div>
+                  <div>
+                    <h6 class="mb-1">Fast & lightweight</h6>
+                    <p class="mb-0 text-muted">Optimized for speed. No bloat, no lag.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="icon-badge"><i class="bi bi-wifi-off"></i></div>
+                  <div>
+                    <h6 class="mb-1">Works offline</h6>
+                    <p class="mb-0 text-muted">Access your recipes anytime, even without internet.</p>
                   </div>
                 </div>
               </div>
               <div class="col-12"><div class="w-100" style="height:1px;background:var(--rx-border);"></div></div>
               <div class="col-md-6">
                 <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-emoji-smile"></i></div>
+                  <div class="icon-badge"><i class="bi bi-person-check"></i></div>
                   <div>
-                    <h6 class="mb-1">Beginner‑friendly</h6>
-                    <p class="mb-0 text-muted">Clear steps, clean UI, and no fluff. Just cook.</p>
+                    <h6 class="mb-1">No account needed</h6>
+                    <p class="mb-0 text-muted">Start using immediately. Sign up only when you want to.</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-activity"></i></div>
+                  <div class="icon-badge"><i class="bi bi-calendar3"></i></div>
                   <div>
-                    <h6 class="mb-1">Progress tracking</h6>
-                    <p class="mb-0 text-muted">Track what you cook, what you loved, and what to try next.</p>
+                    <h6 class="mb-1">Meal planning ready</h6>
+                    <p class="mb-0 text-muted">Plan your week and keep grocery lists in sync.</p>
                   </div>
                 </div>
               </div>
@@ -296,7 +419,7 @@
     <div class="container">
       <div class="text-center mb-4" data-animate="fade-up">
         <h2 class="section-title mb-2">A quick look at the app</h2>
-        <p class="section-subtitle">Smooth, modern, and made for mobile first.</p>
+        <p class="section-subtitle">Clean, modern, and built for your kitchen.</p>
       </div>
 
       <!-- Multi-item carousel: shows 3 vertical screens per slide -->
@@ -306,18 +429,21 @@
           <button type="button" data-bs-target="#screensCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
         </div>
 
-        <div class="carousel-inner rounded-4 border" style="border-color: var(--rx-border);">
+        <div class="carousel-inner rounded-4 border" style="border-color: var(--rx-border); background: var(--rx-cream-warm);">
           <!-- Slide 1: images 1-3 -->
           <div class="carousel-item active" data-bs-interval="4500">
             <div class="row g-3 screens-triplet p-3">
-              <div class="col-12 col-md-6 col-lg-4">
-                <img class="phone-frame" src="./images/app_pres_1.png" alt="Recipeez screen 1" loading="lazy" />
+              <div class="col-12 col-md-6 col-lg-4 text-center">
+                <img class="phone-frame" src="./images/app_pres_1.png" alt="Your recipe collection" loading="lazy" />
+                <small class="d-block mt-2 text-muted">Your recipe collection</small>
               </div>
-              <div class="col-12 col-md-6 col-lg-4">
-                <img class="phone-frame" src="./images/app_pres_2.png" alt="Recipeez screen 2" loading="lazy" />
+              <div class="col-12 col-md-6 col-lg-4 text-center">
+                <img class="phone-frame" src="./images/app_pres_2.png" alt="Powerful search & filters" loading="lazy" />
+                <small class="d-block mt-2 text-muted">Powerful search & filters</small>
               </div>
-              <div class="col-12 col-md-6 col-lg-4">
-                <img class="phone-frame" src="./images/app_pres_3.png" alt="Recipeez screen 3" loading="lazy" />
+              <div class="col-12 col-md-6 col-lg-4 text-center">
+                <img class="phone-frame" src="./images/app_pres_3.png" alt="Step-by-step cooking" loading="lazy" />
+                <small class="d-block mt-2 text-muted">Step-by-step cooking</small>
               </div>
             </div>
           </div>
@@ -325,14 +451,17 @@
           <!-- Slide 2: images 4-6 -->
           <div class="carousel-item" data-bs-interval="4500">
             <div class="row g-3 screens-triplet p-3">
-              <div class="col-12 col-md-6 col-lg-4">
-                <img class="phone-frame" src="./images/app_pres_4.png" alt="Recipeez screen 4" loading="lazy" />
+              <div class="col-12 col-md-6 col-lg-4 text-center">
+                <img class="phone-frame" src="./images/app_pres_4.png" alt="Nutrition tracking" loading="lazy" />
+                <small class="d-block mt-2 text-muted">Nutrition tracking</small>
               </div>
-              <div class="col-12 col-md-6 col-lg-4">
-                <img class="phone-frame" src="./images/app_pres_5.png" alt="Recipeez screen 5" loading="lazy" />
+              <div class="col-12 col-md-6 col-lg-4 text-center">
+                <img class="phone-frame" src="./images/app_pres_5.png" alt="Import from anywhere" loading="lazy" />
+                <small class="d-block mt-2 text-muted">Import from anywhere</small>
               </div>
-              <div class="col-12 col-md-6 col-lg-4">
-                <img class="phone-frame" src="./images/app_pres_6.png" alt="Recipeez screen 6" loading="lazy" />
+              <div class="col-12 col-md-6 col-lg-4 text-center">
+                <img class="phone-frame" src="./images/app_pres_6.png" alt="Organize with tags" loading="lazy" />
+                <small class="d-block mt-2 text-muted">Organize with tags</small>
               </div>
             </div>
           </div>
@@ -350,7 +479,7 @@
     </div>
   </section>
 
-  <!-- FAQ + Roadmap -->
+  <!-- FAQ -->
   <section id="faq" class="py-6">
     <div class="container">
       <div class="row g-4">
@@ -362,39 +491,55 @@
           <div class="accordion" id="faqAcc">
             <div class="accordion-item border rounded-3 overflow-hidden" style="border-color: var(--rx-border)">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#f1">Is Recipeez free?</button>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f1">Is Recipeez free?</button>
               </h2>
               <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body text-muted">Recipeez is free to use with optional Pro features for power users.</div>
+                <div class="accordion-body">Yes! Recipeez is completely free to use. We may add optional Pro features for power users in the future, but all core features will always be free.</div>
               </div>
             </div>
             <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#f2">Are my recipes private?</button>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">Are my recipes private?</button>
               </h2>
               <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body text-muted">You control visibility. Keep recipes private, share with close ones, or make them public.</div>
+                <div class="accordion-body">Absolutely. Your recipes are private by default and stored locally on your device. You have full control over your data at all times.</div>
               </div>
             </div>
             <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#f3">Which platforms are supported?</button>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">Can I import my existing recipes?</button>
               </h2>
               <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body text-muted">Android is available now. iOS and a read‑only web view are planned.</div>
+                <div class="accordion-body">Yes! You can import recipes from any website by sharing the link to Recipeez. We also support importing from text, photos, and YouTube videos.</div>
+              </div>
+            </div>
+            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4">Do I need an account?</button>
+              </h2>
+              <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body">No! You can start using Recipeez immediately without creating an account. Sign up only when you want to sync recipes across devices or access additional features.</div>
+              </div>
+            </div>
+            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f5">Does it work offline?</button>
+              </h2>
+              <div id="f5" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
+                <div class="accordion-body">Yes! All your recipes are stored locally on your device, so you can access them anytime, even without an internet connection. Perfect for cooking in areas with poor signal.</div>
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-6" data-animate="fade-up">
-          <div class="feature-card p-4 h-100">
-            <h5 class="mb-2">Roadmap highlights</h5>
-            <p class="section-subtitle mb-3">What we're actively working on next.</p>
+          <div class="why-card p-4 h-100">
+            <h5 class="mb-2">Coming soon</h5>
+            <p class="section-subtitle mb-3">What we're actively working on.</p>
             <ul class="list-unstyled m-0 d-grid gap-3">
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>iOS release</strong> — native app with feature parity.</span></li>
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Advanced meal planner</strong> — drag‑and‑drop weekly schedules & shopping lists.</span></li>
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Recipe import</strong> — smarter parsing from popular sites.</span></li>
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Creator tools</strong> — analytics for views, saves, and feedback.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>iOS release</strong> - native app with full feature parity.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Advanced meal planner</strong> - drag-and-drop weekly schedules & shopping lists.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Recipe scaling</strong> - adjust serving sizes with one tap.</span></li>
+              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Cloud sync</strong> - access your recipes on any device.</span></li>
             </ul>
           </div>
         </div>
@@ -403,18 +548,19 @@
   </section>
 
   <!-- CTA / Download -->
-  <section id="download" class="py-6 section-muted">
+  <section id="download" class="py-6 cta-section">
     <div class="container">
-      <div class="feature-card p-4 p-lg-5 text-center mx-auto" style="max-width: 980px;">
-        <div class="icon-badge mx-auto mb-3"><i class="bi bi-phone"></i></div>
-        <h2 class="section-title">Download Recipeez today</h2>
-        <p class="section-subtitle">Cook smarter with filters, nutrition tracking, and a clean mobile experience.</p>
-        <div class="d-flex flex-wrap justify-content-center gap-2 mt-3 store-badges">
+      <div class="cta-card p-4 p-lg-5 text-center mx-auto position-relative" style="max-width: 980px;">
+        <img src="./images/chef_mascot.png" alt="Chef mascot" class="chef-mascot float-animation d-none d-md-block" style="position:absolute; top:-40px; right:-30px; width:100px; height:auto;" />
+        <div class="icon-badge mx-auto mb-3"><i class="bi bi-book"></i></div>
+        <h2 class="section-title">Start building your recipe collection</h2>
+        <p class="section-subtitle mb-4">Save your favorite recipes, organize them your way, and cook with confidence.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-2 store-badges">
           <a class="d-inline-block" href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" aria-label="Get it on Google Play">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" />
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="64" />
           </a>
-          <!-- Add App Store badge when iOS launches. -->
         </div>
+        <p class="text-muted mt-3 mb-0"><small>Free on Android. iOS coming soon.</small></p>
       </div>
     </div>
   </section>
@@ -425,14 +571,13 @@
       <div class="row g-4 align-items-center">
         <div class="col-md-6">
           <div class="d-flex align-items-center gap-2 mb-1">
-            <strong>Recipeez</strong>
+            <img src="./images/logo.png" height="24" alt="Recipeez logo" />
+            <strong style="color: var(--rx-brown-warm);">Recipeez</strong>
           </div>
-          <small>© <span id="y"></span> Recipeez. All rights reserved.</small>
+          <small>&copy; <span id="y"></span> Recipeez. All rights reserved.</small>
         </div>
         <div class="col-md-6 d-flex justify-content-md-end gap-3">
           <a href="privacy.html" class="link-secondary link-underline-opacity-0">Privacy</a>
-          <!-- <a href="#" class="link-secondary link-underline-opacity-0">Terms</a> -->
-          <!-- <a href="#" class="link-secondary link-underline-opacity-0">Contact</a> -->
         </div>
       </div>
     </div>
