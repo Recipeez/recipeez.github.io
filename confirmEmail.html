@@ -1,116 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Email Confirmation</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .container {
-      max-width: 600px;
-      margin-top: 50px;
-    }
-    .spinner-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 150px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation — Recipeez</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Core palette */
+            --terracotta: #d34f00;
+            --terracotta-soft: rgba(211, 79, 0, 0.12);
+            --terracotta-glow: rgba(211, 79, 0, 0.08);
+            --cream: #FFFCF9;
+            --cream-warm: #FFF8F3;
+            --linen: #F8F4F0;
+            --taupe: #BCA79D;
+            --taupe-light: rgba(188, 167, 157, 0.3);
+            --brown-warm: #55433B;
+            --brown-medium: #7A6459;
+            --brown-light: #9C8A82;
+
+            /* Status colors */
+            --success: #5B8C5A;
+            --success-soft: rgba(91, 140, 90, 0.12);
+            --error: #c44536;
+            --error-soft: rgba(196, 69, 54, 0.12);
+
+            /* Typography */
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+
+            /* Shadows */
+            --shadow-soft: 0 2px 8px rgba(85, 67, 59, 0.06);
+            --shadow-card: 0 4px 20px rgba(85, 67, 59, 0.08);
+
+            /* Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--linen);
+            color: var(--brown-warm);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background Decorations */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
+            background-image:
+                radial-gradient(circle at 20% 20%, var(--terracotta-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--taupe-light) 0%, transparent 50%);
+        }
+
+        .dot-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: radial-gradient(var(--brown-warm) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-sm) 0;
+            background: rgba(255, 252, 249, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(211, 79, 0, 0.25);
+        }
+
+        .logo-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--brown-medium);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--brown-warm);
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--terracotta), #e86a1e);
+            color: white;
+            box-shadow: 0 4px 16px rgba(211, 79, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(211, 79, 0, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 1.5px solid var(--taupe-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--brown-warm);
+            border-radius: 1px;
+        }
+
+        /* Main Content */
+        .confirm-page {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: calc(80px + var(--space-lg)) var(--space-md) var(--space-lg);
+        }
+
+        .confirm-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--cream);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+
+        .confirm-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto var(--space-lg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(211, 79, 0, 0.2);
+        }
+
+        .confirm-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .confirm-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .confirm-subtitle {
+            font-size: 1rem;
+            color: var(--brown-medium);
+            margin-bottom: var(--space-lg);
+        }
+
+        /* Spinner */
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-lg) 0;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--taupe-light);
+            border-top-color: var(--terracotta);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Alert Messages */
+        .alert {
+            display: none;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .alert-success {
+            background: var(--success-soft);
+            color: var(--success);
+            border: 1.5px solid var(--success);
+        }
+
+        .alert-success::before {
+            content: '';
+            display: block;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto var(--space-sm);
+            background: var(--success);
+            border-radius: 50%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 28px;
+        }
+
+        .alert-danger {
+            background: var(--error-soft);
+            color: var(--error);
+            border: 1.5px solid var(--error);
+        }
+
+        .alert-danger::before {
+            content: '';
+            display: block;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto var(--space-sm);
+            background: var(--error);
+            border-radius: 50%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 28px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .confirm-container {
+                padding: var(--space-lg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .confirm-container {
+                padding: var(--space-md);
+                border-radius: var(--radius-lg);
+            }
+
+            .confirm-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .confirm-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Alert box to show success or error messages -->
-    <img width="200" src="https://www.recipeez.io/images/logo.png" title="logo" alt="logo" class="rounded mx-auto d-block mb-4">
+    <!-- Background patterns -->
+    <div class="bg-pattern"></div>
+    <div class="dot-pattern"></div>
 
-    <!-- Loading indicator -->
-    <div id="spinner" class="spinner-container">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <img src="icon.png" alt="" class="logo-icon-img">
+                    </div>
+                    Recipeez
+                </a>
 
-    <div id="alert" class="alert" role="alert" style="display: none;"></div>
-  </div>
+                <ul class="nav-links">
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#how-it-works">How it works</a></li>
+                </ul>
 
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Function to get query parameters from the URL
-    function getQueryParams() {
-      const params = {};
-      const queryString = window.location.search.substring(1);
-      const queries = queryString.split("&");
-      queries.forEach(query => {
-        const [key, value] = query.split("=");
-        if (key) {
-          params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+                <div class="nav-cta">
+                    <a href="index.html#download" class="btn btn-primary">Download</a>
+                </div>
+
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="confirm-page">
+        <div class="confirm-container">
+            <div class="confirm-logo">
+                <img src="icon.png" alt="Recipeez">
+            </div>
+
+            <h1 class="confirm-title">Email Confirmation</h1>
+            <p class="confirm-subtitle">Please wait while we verify your email address...</p>
+
+            <!-- Loading indicator -->
+            <div id="spinner" class="spinner-container">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Alert messages -->
+            <div id="alert" class="alert" role="alert"></div>
+        </div>
+    </main>
+
+    <script>
+        // Function to display an alert message
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alert');
+            const subtitle = document.querySelector('.confirm-subtitle');
+
+            alertDiv.style.display = 'block';
+            alertDiv.className = 'alert alert-' + type;
+            alertDiv.innerText = message;
+
+            // Hide subtitle when showing alert
+            if (subtitle) {
+                subtitle.style.display = 'none';
+            }
         }
-      });
-      return params;
-    }
 
-    // Function to display an alert message
-    function showAlert(message, type) {
-      const alertDiv = document.getElementById('alert');
-      alertDiv.style.display = 'block';
-      alertDiv.className = 'text-center alert alert-' + type;
-      alertDiv.innerText = message;
-    }
+        // Main function to call the confirmEmail API
+        async function confirmEmail() {
+            const params = new URLSearchParams(window.location.search)
+            const userId = params.get('userId');
+            const code = params.get('code');
+            const changedEmail = params.get('changedEmail') || null;
+            // Get the API base URL if provided, remove trailing slash if exists
+            var apiUrlParam = params.get('apiUrlParam');
 
-    // Main function to call the confirmEmail API
-    async function confirmEmail() {
-//       const params = getQueryParams();
-      const params = new URLSearchParams(window.location.search)
-      const userId = params.get('userId');
-      const code = params.get('code');
-      const changedEmail = params.get('changedEmail') || null;
-      // Get the API base URL if provided, remove trailing slash if exists
-      var apiUrlParam = params.get('apiUrlParam');
+            // Check for required parameters
+            if (!userId || !code || !apiUrlParam) {
+                document.getElementById('spinner').style.display = 'none';
+                showAlert('Missing required parameters. Please check your confirmation link.', 'danger');
+                return;
+            }
 
-      // Check for required parameters
-      if (!userId || !code || !apiUrlParam) {
-        document.getElementById('spinner').style.display = 'none';
-        showAlert('Missing required parameters. Please check your confirmation link.', 'danger');
-        return;
-      }
+            try {
+                // Construct the final API URL. If apiUrlParam is provided, use it as the base URL.
+                const baseUrl = apiUrlParam || '';
+                let apiEndpoint = `${baseUrl}/Users/ConfirmEmail?userId=${encodeURIComponent(userId)}&code=${encodeURIComponent(code)}`;
+                if (changedEmail) {
+                    apiEndpoint += `&changedEmail=${encodeURIComponent(changedEmail)}`;
+                }
 
-      try {
-        // Construct the final API URL. If apiUrlParam is provided, use it as the base URL.
-        const baseUrl = apiUrlParam || '';
-        let apiEndpoint = `${baseUrl}/Users/ConfirmEmail?userId=${encodeURIComponent(userId)}&code=${encodeURIComponent(code)}`;
-        if (changedEmail) {
-          apiEndpoint += `&changedEmail=${encodeURIComponent(changedEmail)}`;
+                // Call the API (using GET; adjust to POST if needed)
+                const response = await fetch(apiEndpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                document.getElementById('spinner').style.display = 'none';
+
+                if (response.status === 200) {
+                    showAlert('Your email has been successfully confirmed! You can now access your Recipeez account and begin your cooking journey.', 'success');
+                } else {
+                    showAlert('There was an error confirming your email. Please try again later.', 'danger');
+                }
+            } catch (error) {
+                document.getElementById('spinner').style.display = 'none';
+                console.error('Error confirming email:', error);
+                showAlert('An unexpected error occurred. Please try again later.', 'danger');
+            }
         }
 
-        // Call the API (using GET; adjust to POST if needed)
-        const response = await fetch(apiEndpoint, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        document.getElementById('spinner').style.display = 'none';
-
-        if (response.status === 200) {
-          showAlert('Your email has been successfully confirmed!\n You can now access your Recipeez App account and begin your cooking journey.', 'success');
-        } else {
-          showAlert('There was an error confirming your email. Please try again later.', 'danger');
-        }
-      } catch (error) {
-        document.getElementById('spinner').style.display = 'none';
-        console.error('Error confirming email:', error);
-        showAlert('An unexpected error occurred. Please try again later.', 'danger');
-      }
-    }
-
-    // Run the confirmEmail function once the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', confirmEmail);
-  </script>
+        // Run the confirmEmail function once the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', confirmEmail);
+    </script>
 </body>
 </html>

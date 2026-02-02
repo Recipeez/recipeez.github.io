@@ -1,619 +1,1885 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recipeez — Your recipes. Beautifully organized.</title>
-  <meta name="description" content="Recipeez: Save recipes from anywhere, organize your collection, and cook with confidence. Your personal recipe manager for Android." />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <meta property="og:title" content="Recipeez — Your recipes. Beautifully organized." />
-  <meta property="og:description" content="Save recipes from anywhere, organize your collection, and cook with confidence." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#d34f00" />
-  <style>
-    :root {
-      /* Warm Palette */
-      --rx-cream: #FFFCf9;
-      --rx-cream-warm: #FFF8F3;
-      --rx-linen: #F8F4F0;
-      --rx-taupe: #BCA79D;
-      --rx-taupe-light: rgba(188,167,157,0.3);
-      --rx-brown-warm: #55433B;
-      --rx-brown-medium: #7A6459;
-      --rx-brown-light: #9C8A82;
-      --rx-terracotta: #d34f00;
-      --rx-terracotta-soft: rgba(211,79,0,0.12);
-      --rx-terracotta-100: #ffe6d5;
-      --rx-terracotta-600: #b74300;
-      --rx-card: #ffffff;
-      --rx-border: #E8DDD6;
-      --rx-shadow: rgba(85,67,59,0.08);
-      --rx-shadow-lg: rgba(85,67,59,0.12);
-      --rx-hero: radial-gradient(90% 120% at 80% 0%, rgba(211,79,0,0.10), transparent 60%),
-                 radial-gradient(70% 80% at 20% 20%, rgba(255,229,210,0.65), transparent 60%),
-                 var(--rx-cream);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipeez — Your recipe collection, simplified</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Core palette */
+            --terracotta: #d34f00;
+            --terracotta-soft: rgba(211, 79, 0, 0.12);
+            --terracotta-glow: rgba(211, 79, 0, 0.08);
+            --cream: #FFFCF9;
+            --cream-warm: #FFF8F3;
+            --linen: #F8F4F0;
+            --taupe: #BCA79D;
+            --taupe-light: rgba(188, 167, 157, 0.3);
+            --brown-warm: #55433B;
+            --brown-medium: #7A6459;
+            --brown-light: #9C8A82;
 
-    html, body {
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
-      color: var(--rx-brown-warm);
-      background: var(--rx-cream);
-    }
-    .py-6 { padding-top: 4rem; padding-bottom: 4rem; }
+            /* Accent colors for features */
+            --sage: #5B8C5A;
+            --sage-soft: rgba(91, 140, 90, 0.12);
+            --lavender: #6B7FD7;
+            --lavender-soft: rgba(107, 127, 215, 0.12);
+            --honey: #D4A853;
+            --honey-soft: rgba(212, 168, 83, 0.12);
 
-    /* Navbar */
-    .navbar.rx-navbar { transition: background-color .3s ease, box-shadow .3s ease, color .2s ease; }
-    .navbar.rx-navbar .navbar-brand { font-weight: 800; letter-spacing: .2px; }
-    .navbar.rx-navbar .nav-link { transition: color .2s ease; }
+            /* Typography */
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    .navbar.rx-navbar.top { background-color: var(--rx-terracotta); }
-    .navbar.rx-navbar.top .navbar-brand, .navbar.rx-navbar.top .nav-link { color: #fff; }
-    .navbar.rx-navbar.top .nav-link:hover { color: var(--rx-terracotta-100); }
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+            --space-3xl: 10rem;
 
-    .navbar.rx-navbar.scrolled { background-color: var(--rx-cream); box-shadow: 0 2px 12px var(--rx-shadow); }
-    .navbar.rx-navbar.scrolled .navbar-brand { color: var(--rx-brown-warm); }
-    .navbar.rx-navbar.scrolled .nav-link { color: var(--rx-brown-medium); }
-    .navbar.rx-navbar.scrolled .nav-link:hover { color: var(--rx-terracotta); }
+            /* Shadows */
+            --shadow-soft: 0 2px 8px rgba(85, 67, 59, 0.06);
+            --shadow-card: 0 4px 20px rgba(85, 67, 59, 0.08);
+            --shadow-hover: 0 8px 32px rgba(85, 67, 59, 0.12);
+            --shadow-glow: 0 8px 40px rgba(211, 79, 0, 0.2);
 
-    /* Buttons */
-    .btn-primary { --bs-btn-bg: var(--rx-terracotta); --bs-btn-border-color: var(--rx-terracotta); --bs-btn-hover-bg: var(--rx-terracotta-600); --bs-btn-hover-border-color: var(--rx-terracotta-600); --bs-btn-focus-shadow-rgb: 211,79,0; }
-    .btn-outline-primary { --bs-btn-color: var(--rx-terracotta); --bs-btn-border-color: var(--rx-terracotta); --bs-btn-hover-bg: var(--rx-terracotta); --bs-btn-hover-border-color: var(--rx-terracotta); --bs-btn-hover-color: #fff; }
-
-    /* Hero */
-    .hero { background: var(--rx-hero); color: var(--rx-brown-warm); position: relative; overflow: clip; }
-    .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.08; font-weight: 800; }
-    .hero p.lead { color: var(--rx-brown-medium); font-size: 1.15rem; }
-    .badge-soft { background: var(--rx-terracotta-soft); color: var(--rx-terracotta); border: 1px solid rgba(211,79,0,.25); font-weight: 500; }
-
-    /* Feature strip */
-    .feature-strip { color: var(--rx-brown-light); }
-    .feature-strip .text-primary { color: var(--rx-terracotta) !important; }
-
-    /* Chef mascot */
-    .chef-mascot {
-      filter: drop-shadow(0 8px 24px var(--rx-shadow-lg));
-    }
-
-    /* Cards & sections */
-    .feature-card {
-      background: var(--rx-card);
-      border: 1px solid var(--rx-border);
-      border-radius: 20px;
-      color: var(--rx-brown-warm);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px var(--rx-shadow-lg);
-    }
-    .feature-card p { color: var(--rx-brown-medium); }
-    .icon-badge {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: var(--rx-terracotta-soft);
-      border: 1px solid rgba(211,79,0,.2);
-      color: var(--rx-terracotta);
-    }
-
-    .section-title { font-weight: 800; letter-spacing: 0.2px; color: var(--rx-brown-warm); }
-    .section-subtitle { color: var(--rx-brown-medium); }
-    .section-muted { background: var(--rx-linen); }
-
-    /* Steps */
-    .step { display: flex; gap: 14px; align-items: flex-start; }
-    .step-index {
-      flex: 0 0 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: var(--rx-terracotta-soft);
-      color: var(--rx-terracotta);
-      border: 1px solid rgba(211,79,0,.2);
-      font-weight: 700;
-    }
-    .step h6 { color: var(--rx-brown-warm); }
-    .step p { color: var(--rx-brown-medium); }
-
-    /* Footer */
-    .footer { background: var(--rx-cream-warm); color: var(--rx-brown-medium); border-top: 1px solid var(--rx-border); }
-
-    /* Animations */
-    [data-animate="fade-up"] { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
-    [data-animate="fade-up"].in { opacity: 1; transform: translateY(0); }
-
-    /* Floating animation for hero elements */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    .float-animation {
-      animation: float 4s ease-in-out infinite;
-    }
-
-    /* Store badges */
-    .store-badges img { height: 48px; }
-
-    /* Screens carousel (vertical app shots) */
-    .phone-frame {
-      width: 100%;
-      aspect-ratio: 9/19.5;
-      background: #fff;
-      border: 1px solid var(--rx-border);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px var(--rx-shadow);
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Accordion styling */
-    .accordion-button {
-      background: var(--rx-card);
-      color: var(--rx-brown-warm);
-      font-weight: 500;
-    }
-    .accordion-button:not(.collapsed) {
-      background: var(--rx-cream-warm);
-      color: var(--rx-terracotta);
-      box-shadow: none;
-    }
-    .accordion-button:focus { box-shadow: 0 0 0 0.25rem rgba(211,79,0,0.15); }
-    .accordion-body { color: var(--rx-brown-medium); background: var(--rx-cream); }
-
-    /* CTA section */
-    .cta-section {
-      background: linear-gradient(135deg, var(--rx-cream-warm) 0%, var(--rx-linen) 50%, rgba(211,79,0,0.08) 100%);
-    }
-    .cta-card {
-      background: var(--rx-card);
-      border: 1px solid var(--rx-border);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px var(--rx-shadow-lg);
-    }
-
-    /* Text colors */
-    .text-muted { color: var(--rx-brown-light) !important; }
-    .text-primary { color: var(--rx-terracotta) !important; }
-
-    /* Carousel controls */
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      background-color: var(--rx-brown-warm);
-      border-radius: 50%;
-      padding: 20px;
-    }
-    .carousel-indicators button {
-      background-color: var(--rx-brown-light);
-    }
-    .carousel-indicators button.active {
-      background-color: var(--rx-terracotta);
-    }
-
-    /* Hero image styling */
-    .hero-image-container {
-      position: relative;
-    }
-    .hero-image {
-      border-radius: 20px;
-      box-shadow: 0 20px 60px var(--rx-shadow-lg);
-    }
-
-    /* Why Recipeez card */
-    .why-card {
-      background: var(--rx-card);
-      border: 1px solid var(--rx-border);
-      border-radius: 20px;
-    }
-    .why-card .icon-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-    }
-  </style>
-</head>
-<body data-bs-spy="scroll" data-bs-target="#rxNav" data-bs-offset="100" tabindex="0">
-
-  <!-- Navbar -->
-  <nav id="rxNav" class="navbar navbar-expand-lg fixed-top rx-navbar top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-        <img src="./images/white_logo.png" height="40" alt="Recipeez logo" />
-        Recipeez
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div id="nav" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-          <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
-          <li class="nav-item"><a class="nav-link" href="#screens">Screens</a></li>
-          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
-        </ul>
-        <div class="ms-lg-3 d-flex align-items-center store-badges">
-          <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" class="d-inline-block" aria-label="Get it on Google Play">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="40" />
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <header class="hero">
-    <div class="container" style="padding-top: 7rem; padding-bottom: 4rem;">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6" data-animate="fade-up">
-          <span class="badge badge-soft mb-3">Free on Android</span>
-          <h1 class="mb-3">Your recipes. <span style="background: linear-gradient(90deg,#d34f00,#ff9150); -webkit-background-clip: text; background-clip: text; color: transparent;">Beautifully organized.</span></h1>
-          <p class="lead mb-4">Save recipes from anywhere, organize your collection, and cook with confidence. Recipeez is your personal recipe manager.</p>
-          <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" class="d-inline-block" aria-label="Get it on Google Play">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="64" />
-          </a>
-        </div>
-        <div class="col-lg-6 d-flex justify-content-lg-end justify-content-center" data-animate="fade-up">
-          <div class="hero-image-container">
-            <img src="./images/app_screenshots.png" alt="Recipeez app screenshots" loading="lazy" class="hero-image" style="width:100%; max-width:500px; height:auto; display:block;" />
-            <img src="./images/chef_mascot.png" alt="Chef mascot" class="chef-mascot float-animation d-none d-lg-block" style="position:absolute; bottom:-20px; left:-60px; width:120px; height:auto;" />
-          </div>
-        </div>
-      </div>
-
-      <div class="row feature-strip mt-5 gy-3" aria-hidden="true">
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-cloud-download text-primary"></i><small>Import from anywhere</small></div>
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-collection text-primary"></i><small>Smart organization</small></div>
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-heart-pulse text-primary"></i><small>Nutrition tracking</small></div>
-        <div class="col-6 col-md-3 d-flex align-items-center gap-2"><i class="bi bi-shield-lock text-primary"></i><small>100% private</small></div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Features -->
-  <section id="features" class="py-6 section-muted">
-    <div class="container">
-      <div class="text-center mb-5" data-animate="fade-up">
-        <h2 class="section-title mb-2">Everything you need to manage your recipes</h2>
-        <p class="section-subtitle">Save, organize, and cook with ease.</p>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-3" data-animate="fade-up">
-          <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-cloud-arrow-down fs-5"></i></div>
-            <h5 class="mb-2">Smart Import</h5>
-            <p class="mb-0">Import recipes from any website, YouTube video, or just paste text. We'll organize it for you.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-animate="fade-up">
-          <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-collection fs-5"></i></div>
-            <h5 class="mb-2">Your Collection</h5>
-            <p class="mb-0">Build your personal cookbook. Search, filter, and find any recipe in seconds.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-animate="fade-up">
-          <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-bar-chart fs-5"></i></div>
-            <h5 class="mb-2">Nutrition at a Glance</h5>
-            <p class="mb-0">Calories & macros calculated automatically. Eat smarter without the effort.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3" data-animate="fade-up">
-          <div class="feature-card h-100 p-4">
-            <div class="icon-badge mb-3"><i class="bi bi-journal-check fs-5"></i></div>
-            <h5 class="mb-2">Cook Mode</h5>
-            <p class="mb-0">Step-by-step instructions, timers, and a clean interface designed for the kitchen.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works + Why Recipeez -->
-  <section id="how" class="py-6">
-    <div class="container">
-      <div class="row align-items-start g-5">
-        <div class="col-lg-5" data-animate="fade-up">
-          <h2 class="section-title mb-3">How it works</h2>
-          <p class="section-subtitle">From saved recipe to finished dish in three simple steps.</p>
-          <div class="d-flex flex-column gap-4 mt-4">
-            <div class="step">
-              <div class="step-index">1</div>
-              <div>
-                <h6 class="mb-1">Save a recipe</h6>
-                <p class="mb-0">Import from a link, snap a photo, or type it manually.</p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-index">2</div>
-              <div>
-                <h6 class="mb-1">Organize your way</h6>
-                <p class="mb-0">Add tags, categories, and notes. Your system, your rules.</p>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-index">3</div>
-              <div>
-                <h6 class="mb-1">Cook with ease</h6>
-                <p class="mb-0">Follow clear steps, track nutrition, and mark favorites.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-7" data-animate="fade-up">
-          <div class="why-card p-4 p-lg-5 h-100">
-            <div class="row g-4">
-              <div class="col-12">
-                <h5 class="mb-2">Why Recipeez</h5>
-                <p class="mb-0 section-subtitle">Built for people who love to cook.</p>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-shield-check"></i></div>
-                  <div>
-                    <h6 class="mb-1">Your data, your rules</h6>
-                    <p class="mb-0 text-muted">Private by default. Your recipes stay yours.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-box-arrow-in-down"></i></div>
-                  <div>
-                    <h6 class="mb-1">Easy import</h6>
-                    <p class="mb-0 text-muted">Bring recipes from any website or app in seconds.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-lightning-charge"></i></div>
-                  <div>
-                    <h6 class="mb-1">Fast & lightweight</h6>
-                    <p class="mb-0 text-muted">Optimized for speed. No bloat, no lag.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-wifi-off"></i></div>
-                  <div>
-                    <h6 class="mb-1">Works offline</h6>
-                    <p class="mb-0 text-muted">Access your recipes anytime, even without internet.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12"><div class="w-100" style="height:1px;background:var(--rx-border);"></div></div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-person-check"></i></div>
-                  <div>
-                    <h6 class="mb-1">No account needed</h6>
-                    <p class="mb-0 text-muted">Start using immediately. Sign up only when you want to.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="d-flex align-items-start gap-3">
-                  <div class="icon-badge"><i class="bi bi-calendar3"></i></div>
-                  <div>
-                    <h6 class="mb-1">Meal planning ready</h6>
-                    <p class="mb-0 text-muted">Plan your week and keep grocery lists in sync.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Screens / Carousel -->
-  <section id="screens" class="py-6 section-muted">
-    <div class="container">
-      <div class="text-center mb-4" data-animate="fade-up">
-        <h2 class="section-title mb-2">A quick look at the app</h2>
-        <p class="section-subtitle">Clean, modern, and built for your kitchen.</p>
-      </div>
-
-      <!-- Multi-item carousel: shows 3 vertical screens per slide -->
-      <div id="screensCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#screensCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#screensCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        </div>
-
-        <div class="carousel-inner rounded-4 border" style="border-color: var(--rx-border); background: var(--rx-cream-warm);">
-          <!-- Slide 1: images 1-3 -->
-          <div class="carousel-item active" data-bs-interval="4500">
-            <div class="row g-3 screens-triplet p-3">
-              <div class="col-12 col-md-6 col-lg-4 text-center">
-                <img class="phone-frame" src="./images/app_pres_1.png" alt="Your recipe collection" loading="lazy" />
-                <small class="d-block mt-2 text-muted">Your recipe collection</small>
-              </div>
-              <div class="col-12 col-md-6 col-lg-4 text-center">
-                <img class="phone-frame" src="./images/app_pres_2.png" alt="Powerful search & filters" loading="lazy" />
-                <small class="d-block mt-2 text-muted">Powerful search & filters</small>
-              </div>
-              <div class="col-12 col-md-6 col-lg-4 text-center">
-                <img class="phone-frame" src="./images/app_pres_3.png" alt="Step-by-step cooking" loading="lazy" />
-                <small class="d-block mt-2 text-muted">Step-by-step cooking</small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 2: images 4-6 -->
-          <div class="carousel-item" data-bs-interval="4500">
-            <div class="row g-3 screens-triplet p-3">
-              <div class="col-12 col-md-6 col-lg-4 text-center">
-                <img class="phone-frame" src="./images/app_pres_4.png" alt="Nutrition tracking" loading="lazy" />
-                <small class="d-block mt-2 text-muted">Nutrition tracking</small>
-              </div>
-              <div class="col-12 col-md-6 col-lg-4 text-center">
-                <img class="phone-frame" src="./images/app_pres_5.png" alt="Import from anywhere" loading="lazy" />
-                <small class="d-block mt-2 text-muted">Import from anywhere</small>
-              </div>
-              <div class="col-12 col-md-6 col-lg-4 text-center">
-                <img class="phone-frame" src="./images/app_pres_6.png" alt="Organize with tags" loading="lazy" />
-                <small class="d-block mt-2 text-muted">Organize with tags</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#screensCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#screensCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="py-6">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-lg-6" data-animate="fade-up">
-          <div class="text-start mb-3">
-            <h2 class="section-title mb-2">Good to know</h2>
-            <p class="section-subtitle">Answers to common questions.</p>
-          </div>
-          <div class="accordion" id="faqAcc">
-            <div class="accordion-item border rounded-3 overflow-hidden" style="border-color: var(--rx-border)">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f1">Is Recipeez free?</button>
-              </h2>
-              <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body">Yes! Recipeez is completely free to use. We may add optional Pro features for power users in the future, but all core features will always be free.</div>
-              </div>
-            </div>
-            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">Are my recipes private?</button>
-              </h2>
-              <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body">Absolutely. Your recipes are private by default and stored locally on your device. You have full control over your data at all times.</div>
-              </div>
-            </div>
-            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">Can I import my existing recipes?</button>
-              </h2>
-              <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body">Yes! You can import recipes from any website by sharing the link to Recipeez. We also support importing from text, photos, and YouTube videos.</div>
-              </div>
-            </div>
-            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4">Do I need an account?</button>
-              </h2>
-              <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body">No! You can start using Recipeez immediately without creating an account. Sign up only when you want to sync recipes across devices or access additional features.</div>
-              </div>
-            </div>
-            <div class="accordion-item border rounded-3 overflow-hidden mt-2" style="border-color: var(--rx-border)">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f5">Does it work offline?</button>
-              </h2>
-              <div id="f5" class="accordion-collapse collapse" data-bs-parent="#faqAcc">
-                <div class="accordion-body">Yes! All your recipes are stored locally on your device, so you can access them anytime, even without an internet connection. Perfect for cooking in areas with poor signal.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6" data-animate="fade-up">
-          <div class="why-card p-4 h-100">
-            <h5 class="mb-2">Coming soon</h5>
-            <p class="section-subtitle mb-3">What we're actively working on.</p>
-            <ul class="list-unstyled m-0 d-grid gap-3">
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>iOS release</strong> - native app with full feature parity.</span></li>
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Advanced meal planner</strong> - drag-and-drop weekly schedules & shopping lists.</span></li>
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Recipe scaling</strong> - adjust serving sizes with one tap.</span></li>
-              <li class="d-flex align-items-start gap-3"><i class="bi bi-check2-circle text-primary"></i><span><strong>Cloud sync</strong> - access your recipes on any device.</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA / Download -->
-  <section id="download" class="py-6 cta-section">
-    <div class="container">
-      <div class="cta-card p-4 p-lg-5 text-center mx-auto position-relative" style="max-width: 980px;">
-        <img src="./images/chef_mascot.png" alt="Chef mascot" class="chef-mascot float-animation d-none d-md-block" style="position:absolute; top:-40px; right:-30px; width:100px; height:auto;" />
-        <div class="icon-badge mx-auto mb-3"><i class="bi bi-book"></i></div>
-        <h2 class="section-title">Start building your recipe collection</h2>
-        <p class="section-subtitle mb-4">Save your favorite recipes, organize them your way, and cook with confidence.</p>
-        <div class="d-flex flex-wrap justify-content-center gap-2 store-badges">
-          <a class="d-inline-block" href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez&hl=fr" aria-label="Get it on Google Play">
-            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="64" />
-          </a>
-        </div>
-        <p class="text-muted mt-3 mb-0"><small>Free on Android. iOS coming soon.</small></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer py-5">
-    <div class="container">
-      <div class="row g-4 align-items-center">
-        <div class="col-md-6">
-          <div class="d-flex align-items-center gap-2 mb-1">
-            <img src="./images/logo.png" height="24" alt="Recipeez logo" />
-            <strong style="color: var(--rx-brown-warm);">Recipeez</strong>
-          </div>
-          <small>&copy; <span id="y"></span> Recipeez. All rights reserved.</small>
-        </div>
-        <div class="col-md-6 d-flex justify-content-md-end gap-3">
-          <a href="privacy.html" class="link-secondary link-underline-opacity-0">Privacy</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script>
-    // Navbar color swap on scroll
-    const nav = document.querySelector('.rx-navbar');
-    function handleNavScroll() {
-      if (window.scrollY > 10) {
-        nav.classList.remove('top');
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-        nav.classList.add('top');
-      }
-    }
-    document.addEventListener('scroll', handleNavScroll);
-    window.addEventListener('load', handleNavScroll);
-
-    // Entrance fades
-    const onScroll = () => {
-      const els = document.querySelectorAll('[data-animate]');
-      const y = window.scrollY + window.innerHeight * 0.9;
-      els.forEach(el => {
-        if (!el.classList.contains('in') && el.getBoundingClientRect().top + window.scrollY < y) {
-          el.classList.add('in');
+            /* Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
         }
-      });
-    };
-    document.addEventListener('scroll', onScroll);
-    window.addEventListener('load', onScroll);
 
-    // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--linen);
+            color: var(--brown-warm);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Utility Classes ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .text-center { text-align: center; }
+
+        /* ===== Background Decorations ===== */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
+            background-image:
+                radial-gradient(circle at 20% 20%, var(--terracotta-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--taupe-light) 0%, transparent 50%);
+        }
+
+        .dot-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: radial-gradient(var(--brown-warm) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* ===== Navigation ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-sm) 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(255, 252, 249, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(211, 79, 0, 0.25);
+        }
+
+        .logo-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--brown-medium);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--terracotta);
+            border-radius: 1px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--brown-warm);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--brown-medium);
+        }
+
+        .btn-ghost:hover {
+            color: var(--brown-warm);
+            background: var(--taupe-light);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--terracotta), #e86a1e);
+            color: white;
+            box-shadow: 0 4px 16px rgba(211, 79, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(211, 79, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--brown-warm);
+            border: 1.5px solid var(--taupe-light);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--terracotta);
+            box-shadow: var(--shadow-card);
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.05rem;
+            border-radius: var(--radius-lg);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 1.5px solid var(--taupe-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--brown-warm);
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: var(--space-3xl) 0 var(--space-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-blob-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--terracotta-glow);
+            top: -100px;
+            right: -100px;
+        }
+
+        .hero-blob-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--taupe-light);
+            bottom: -50px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 20px) scale(1.05); }
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 0.5rem 1rem;
+            background: var(--terracotta-soft);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-title span {
+            color: var(--terracotta);
+            position: relative;
+        }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: var(--terracotta-soft);
+            border-radius: 6px;
+            z-index: -1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--brown-medium);
+            margin-bottom: var(--space-lg);
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-stores {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .store-badge {
+            height: 48px;
+            transition: transform 0.2s ease;
+        }
+
+        .store-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .store-badge img {
+            height: 100%;
+            width: auto;
+        }
+
+        .store-coming-soon {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 0.75rem 1.25rem;
+            background: var(--taupe-light);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--brown-medium);
+        }
+
+        .store-coming-soon svg {
+            opacity: 0.7;
+        }
+
+        @media (max-width: 480px) {
+            .hero-stores {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-inner:not(.text-center) .hero-stores {
+                align-items: center;
+            }
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .phone-mockup {
+            position: relative;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .phone-frame {
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow:
+                0 50px 100px rgba(85, 67, 59, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            background: var(--cream);
+            border-radius: 30px;
+            overflow: hidden;
+            aspect-ratio: 9/19;
+            position: relative;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 28px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .phone-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--linen) 0%, var(--cream-warm) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .phone-placeholder-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--terracotta-soft);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .phone-placeholder-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--terracotta);
+        }
+
+        .phone-placeholder-text {
+            font-size: 0.85rem;
+            color: var(--brown-light);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-hover);
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        .floating-card-1 {
+            left: -60px;
+            top: 20%;
+            padding: var(--space-sm) var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .floating-card-1 .icon {
+            width: 32px;
+            height: 32px;
+            background: var(--sage-soft);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-card-1 .icon svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--sage);
+        }
+
+        .floating-card-1 span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+        }
+
+        .floating-card-2 {
+            right: -40px;
+            bottom: 25%;
+            padding: var(--space-sm);
+            animation-delay: -2s;
+        }
+
+        .floating-card-2 .recipe-mini {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .floating-card-2 .recipe-img {
+            width: 40px;
+            height: 40px;
+            background: var(--honey-soft);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-card-2 .recipe-img svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--honey);
+        }
+
+        .floating-card-2 .recipe-info {
+            font-size: 0.8rem;
+        }
+
+        .floating-card-2 .recipe-name {
+            font-weight: 600;
+            color: var(--brown-warm);
+        }
+
+        .floating-card-2 .recipe-time {
+            color: var(--brown-light);
+            font-size: 0.75rem;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== Features Section ===== */
+        .features {
+            padding: var(--space-3xl) 0;
+            background: var(--cream);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(180deg, var(--linen), var(--cream));
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto var(--space-2xl);
+            position: relative;
+        }
+
+        .section-eyebrow {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 600;
+            color: var(--brown-warm);
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--brown-medium);
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .feature-card {
+            background: white;
+            padding: var(--space-lg);
+            border-radius: var(--radius-xl);
+            border: 1.5px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-accent, var(--terracotta));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--taupe-light);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:nth-child(1) { --card-accent: var(--terracotta); }
+        .feature-card:nth-child(2) { --card-accent: var(--sage); }
+        .feature-card:nth-child(3) { --card-accent: var(--lavender); }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: var(--terracotta-soft);
+        }
+        .feature-card:nth-child(2) .feature-icon {
+            background: var(--sage-soft);
+        }
+        .feature-card:nth-child(3) .feature-icon {
+            background: var(--lavender-soft);
+        }
+
+        .feature-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .feature-card:nth-child(1) .feature-icon svg { fill: var(--terracotta); }
+        .feature-card:nth-child(2) .feature-icon svg { fill: var(--sage); }
+        .feature-card:nth-child(3) .feature-icon svg { fill: var(--lavender); }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-xs);
+            letter-spacing: -0.01em;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            color: var(--brown-medium);
+            line-height: 1.65;
+        }
+
+        /* ===== How It Works Section ===== */
+        .how-it-works {
+            padding: var(--space-3xl) 0;
+            background: var(--linen);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-xl);
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--taupe-light), var(--taupe-light), transparent);
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border: 2px solid var(--taupe-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-md);
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-xs);
+        }
+
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--brown-medium);
+            max-width: 280px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== Smart Import Section ===== */
+        .smart-import {
+            padding: var(--space-3xl) 0;
+            background: var(--cream);
+            overflow: hidden;
+        }
+
+        .smart-import-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+
+        .smart-import-visual {
+            position: relative;
+        }
+
+        .import-demo {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-hover);
+            position: relative;
+        }
+
+        .import-demo-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--taupe-light);
+        }
+
+        .import-demo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--terracotta), #e86a1e);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .import-demo-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+
+        .import-demo-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+        }
+
+        .import-demo-url {
+            background: var(--linen);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
+        }
+
+        .import-demo-url svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--brown-light);
+            flex-shrink: 0;
+        }
+
+        .import-demo-url span {
+            font-size: 0.85rem;
+            color: var(--brown-medium);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .import-result {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        .import-result-img {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--honey-soft), var(--terracotta-soft));
+            border-radius: var(--radius-lg);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .import-result-img svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--terracotta);
+            opacity: 0.5;
+        }
+
+        .import-result-info {
+            flex: 1;
+        }
+
+        .import-result-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-xs);
+        }
+
+        .import-result-meta {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xs);
+        }
+
+        .import-result-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--linen);
+            border-radius: var(--radius-sm);
+            color: var(--brown-medium);
+        }
+
+        .import-result-ingredients {
+            font-size: 0.85rem;
+            color: var(--brown-light);
+        }
+
+        .magic-sparkle {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--terracotta), #e86a1e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-glow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .magic-sparkle svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .smart-import-content h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 600;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-md);
+            letter-spacing: -0.02em;
+        }
+
+        .smart-import-content p {
+            font-size: 1.1rem;
+            color: var(--brown-medium);
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+
+        .import-sources {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .import-source {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 0.6rem 1rem;
+            background: white;
+            border-radius: 100px;
+            border: 1.5px solid var(--taupe-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--brown-warm);
+            transition: all 0.2s ease;
+        }
+
+        .import-source:hover {
+            border-color: var(--terracotta);
+            background: var(--terracotta-soft);
+        }
+
+        .import-source svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--brown-medium);
+        }
+
+        /* ===== Coming Soon Section ===== */
+        .coming-soon {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(180deg, var(--linen), var(--cream-warm));
+        }
+
+        .coming-soon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+        }
+
+        .coming-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            text-align: center;
+            border: 1.5px solid var(--taupe-light);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .coming-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--terracotta);
+        }
+
+        .coming-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--terracotta);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.6rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .coming-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--linen);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-sm);
+        }
+
+        .coming-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: var(--brown-medium);
+        }
+
+        .coming-card:hover .coming-icon {
+            background: var(--terracotta-soft);
+        }
+
+        .coming-card:hover .coming-icon svg {
+            fill: var(--terracotta);
+        }
+
+        .coming-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-xs);
+        }
+
+        .coming-desc {
+            font-size: 0.85rem;
+            color: var(--brown-light);
+            line-height: 1.5;
+        }
+
+        .coming-card-featured {
+            border-color: var(--terracotta);
+            background: linear-gradient(135deg, var(--cream), var(--terracotta-glow));
+        }
+
+        .coming-card-featured .coming-icon {
+            background: var(--terracotta-soft);
+        }
+
+        .coming-card-featured .coming-icon svg {
+            fill: var(--terracotta);
+        }
+
+        /* ===== Pricing Section ===== */
+        .pricing {
+            padding: var(--space-3xl) 0;
+            background: var(--cream);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-xl);
+            border: 2px solid var(--taupe-light);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--terracotta);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--terracotta), #e86a1e);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pricing-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--brown-warm);
+            margin-bottom: var(--space-xs);
+        }
+
+        .pricing-tagline {
+            font-size: 0.95rem;
+            color: var(--brown-medium);
+            margin-bottom: var(--space-md);
+        }
+
+        .pricing-price {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--taupe-light);
+        }
+
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--brown-warm);
+            line-height: 1;
+        }
+
+        .pricing-period {
+            font-size: 1rem;
+            color: var(--brown-light);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: var(--space-lg);
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-xs) 0;
+            font-size: 0.95rem;
+            color: var(--brown-medium);
+        }
+
+        .pricing-features svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .pricing-features .check {
+            fill: var(--sage);
+        }
+
+        .pricing-features .cross {
+            fill: var(--taupe);
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ===== CTA Section ===== */
+        .cta {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(135deg, var(--brown-warm), #3d2f29);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .cta-inner {
+            position: relative;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            margin: 0 auto var(--space-lg);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 600;
+            color: white;
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .cta p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .cta .btn-primary {
+            background: white;
+            color: var(--brown-warm);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta .btn-primary:hover {
+            background: var(--cream);
+        }
+
+        .cta .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .cta .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .cta .cta-ios-soon {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .cta .cta-ios-soon:hover {
+            transform: none;
+            background: transparent;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-stores {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .floating-card-1 {
+                left: -20px;
+            }
+
+            .floating-card-2 {
+                right: -20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .smart-import-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .smart-import-visual {
+                order: -1;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+
+            .coming-soon-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero {
+                padding-top: var(--space-2xl);
+            }
+
+            .hero-title span::after {
+                height: 8px;
+                bottom: 2px;
+            }
+
+            .coming-soon-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 540px) {
+            .coming-soon-grid {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --space-lg: 2rem;
+                --space-xl: 3rem;
+                --space-2xl: 4rem;
+                --space-3xl: 6rem;
+            }
+
+            .btn-large {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .phone-mockup {
+                max-width: 260px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .import-demo {
+                padding: var(--space-md);
+            }
+
+            .import-result {
+                flex-direction: column;
+            }
+
+            .import-result-img {
+                width: 100%;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background patterns -->
+    <div class="bg-pattern"></div>
+    <div class="dot-pattern"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <img src="icon.png" alt="" class="logo-icon-img">
+                    </div>
+                    Recipeez
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How it works</a></li>
+                </ul>
+
+                <div class="nav-cta">
+                    <a href="#download" class="btn btn-primary">Download</a>
+                </div>
+
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
+
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        Now available on Android
+                    </div>
+
+                    <h1 class="hero-title">
+                        All your recipes,<br>
+                        <span>one place</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Create, import and organize your recipe collection in seconds.
+                        No more scattered bookmarks and lost screenshots.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#download" class="btn btn-primary btn-large">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 5v6h1.17L12 13.17 9.83 11H11V5h2m2-2H9v6H5l7 7 7-7h-4V3zm4 15H5v2h14v-2z"/></svg>
+                            Download for free
+                        </a>
+                        <a href="#features" class="btn btn-secondary btn-large">
+                            Learn more
+                        </a>
+                    </div>
+
+                    <div class="hero-stores">
+                        <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez" class="store-badge" aria-label="Get it on Google Play" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                        </a>
+                        <div class="store-coming-soon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                            iOS coming soon
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <div class="phone-notch"></div>
+                                <div class="phone-placeholder">
+                                    <div class="phone-placeholder-icon">
+                                        <svg viewBox="0 0 24 24"><path d="M6 11c0 4 1.5 7 6 7s6-3 6-7"/><path d="M6 11h12"/><path d="M4 11h1M19 11h1"/><path d="M6 11c0-1 .5-2 2-2h8c1.5 0 2 1 2 2"/><path d="M9 4c0 1.5-.5 2.5-.5 3.5"/><path d="M12 3c0 1.5-.5 2.5-.5 4"/><path d="M15 4c0 1.5-.5 2.5-.5 3.5"/></svg>
+                                    </div>
+                                    <span class="phone-placeholder-text">App screenshot placeholder</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="floating-card floating-card-1">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </div>
+                        <span>Recipe imported!</span>
+                    </div>
+
+                    <div class="floating-card floating-card-2">
+                        <div class="recipe-mini">
+                            <div class="recipe-img">
+                                <svg viewBox="0 0 24 24"><path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18z"/></svg>
+                            </div>
+                            <div class="recipe-info">
+                                <div class="recipe-name">Apple Pie</div>
+                                <div class="recipe-time">45 min • 6 servings</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">Features</div>
+                <h2 class="section-title">Everything you need to cook</h2>
+                <p class="section-subtitle">
+                    An app designed for food lovers, from beginners to experienced chefs.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>
+                    </div>
+                    <h3 class="feature-title">Smart Import</h3>
+                    <p class="feature-desc">
+                        Paste a link or text, and our AI automatically extracts ingredients, steps, and cooking times.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    </div>
+                    <h3 class="feature-title">Manual Creation</h3>
+                    <p class="feature-desc">
+                        Add your own family recipes with a simple and intuitive editor. Photos, ingredients, steps — everything included.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <h3 class="feature-title">Favorites & Organization</h3>
+                    <p class="feature-desc">
+                        Bookmark your favorite recipes, filter by category, and find any dish in an instant.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">How it works</div>
+                <h2 class="section-title">3 simple steps</h2>
+                <p class="section-subtitle">
+                    Start building your recipe collection right now.
+                </p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Download the app</h3>
+                    <p class="step-desc">
+                        Free on Android (iOS coming soon). Create your account in seconds.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Add your recipes</h3>
+                    <p class="step-desc">
+                        Import from a link, copied text, or create your recipes manually.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Start cooking!</h3>
+                    <p class="step-desc">
+                        Find all your recipes organized and ready to prepare.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Import Section -->
+    <section class="smart-import">
+        <div class="container">
+            <div class="smart-import-inner">
+                <div class="smart-import-visual">
+                    <div class="import-demo">
+                        <div class="import-demo-header">
+                            <div class="import-demo-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                            </div>
+                            <span class="import-demo-title">Smart Import</span>
+                        </div>
+
+                        <div class="import-demo-url">
+                            <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+                            <span>https://allrecipes.com/apple-pie-recipe...</span>
+                        </div>
+
+                        <div class="import-result">
+                            <div class="import-result-img">
+                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                            </div>
+                            <div class="import-result-info">
+                                <div class="import-result-name">Classic Apple Pie</div>
+                                <div class="import-result-meta">
+                                    <span class="import-result-tag">45 min</span>
+                                    <span class="import-result-tag">Easy</span>
+                                    <span class="import-result-tag">Dessert</span>
+                                </div>
+                                <div class="import-result-ingredients">8 ingredients • 6 steps</div>
+                            </div>
+                        </div>
+
+                        <div class="magic-sparkle">
+                            <svg viewBox="0 0 24 24"><path d="M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29c-.39-.39-1.02-.39-1.41 0L1.29 18.96c-.39.39-.39 1.02 0 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05c.39-.39.39-1.02 0-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="smart-import-content">
+                    <h2>Import from anywhere</h2>
+                    <p>
+                        Simply copy a link or text from your favorite recipe website.
+                        Our artificial intelligence analyzes the content and automatically creates
+                        a complete recipe card with all the details.
+                    </p>
+
+                    <div class="import-sources">
+                        <div class="import-source">
+                            <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1z"/></svg>
+                            Websites
+                        </div>
+                        <div class="import-source">
+                            <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+                            YouTube
+                        </div>
+                        <div class="import-source">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                            Copied text
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">Coming Soon</div>
+                <h2 class="section-title">And this is just the beginning</h2>
+                <p class="section-subtitle">
+                    We're working on many features to make your experience even better.
+                </p>
+            </div>
+
+            <div class="coming-soon-grid">
+                <div class="coming-card coming-card-featured">
+                    <span class="coming-badge">Soon</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                    </div>
+                    <h3 class="coming-title">iOS App</h3>
+                    <p class="coming-desc">Recipeez will soon be available on iPhone and iPad.</p>
+                </div>
+
+                <div class="coming-card">
+                    <span class="coming-badge">Soon</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    </div>
+                    <h3 class="coming-title">Shopping List</h3>
+                    <p class="coming-desc">Automatically generate your list from selected recipes.</p>
+                </div>
+
+                <div class="coming-card">
+                    <span class="coming-badge">Soon</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                    </div>
+                    <h3 class="coming-title">Meal Planning</h3>
+                    <p class="coming-desc">Organize your weekly menus in a snap.</p>
+                </div>
+
+                <div class="coming-card">
+                    <span class="coming-badge">Soon</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12h-2v-2h2v2zm0-4h-2V6h2v4zm-4 4h-2v-2h2v2zm0-4h-2V6h2v4zm-4 4H7v-2h2v2zm0-4H7V6h2v4z"/></svg>
+                    </div>
+                    <h3 class="coming-title">Cooking Assistant</h3>
+                    <p class="coming-desc">An AI assistant to guide you step by step during preparation.</p>
+                </div>
+
+                <div class="coming-card">
+                    <span class="coming-badge">Soon</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <h3 class="coming-title">Sharing</h3>
+                    <p class="coming-desc">Share your recipes with friends and family.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="download">
+        <div class="container">
+            <div class="cta-inner">
+                <div class="cta-icon">
+                    <img src="icon.png" alt="Recipeez" class="cta-icon-img">
+                </div>
+                <h2>Ready to revolutionize your cooking?</h2>
+                <p>
+                    Download Recipeez now and start building your recipe collection.
+                    It's free, fast, and delicious.
+                </p>
+                <div class="cta-actions">
+                    <a href="https://play.google.com/store/apps/details?id=com.recipeez.recipeez" class="btn btn-primary btn-large" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.31 0 .61.1.87.29L17 12l-11.63 9.71c-.26.19-.56.29-.87.29-.83 0-1.5-.67-1.5-1.5zM21 12l-5.25 3.5L21 19z"/></svg>
+                        Get it on Google Play
+                    </a>
+                    <span class="btn btn-secondary btn-large cta-ios-soon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                        iOS coming soon
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate elements on scroll
+        document.querySelectorAll('.feature-card, .step, .coming-card, .pricing-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Stagger animation for grid items
+        document.querySelectorAll('.features-grid .feature-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.coming-soon-grid .coming-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.steps .step').forEach((step, index) => {
+            step.style.transitionDelay = `${index * 0.15}s`;
+        });
+    </script>
 </body>
 </html>
